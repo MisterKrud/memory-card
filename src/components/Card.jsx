@@ -14,7 +14,7 @@ export default function Card(){
     useEffect(() =>{
         const fetchData = async()=>{
             try {
-                const response = await fetch('https://api.giphy.com/v2/emoji?api_key=VzJfRtnEENBiPs7cBI16fXcQmZIRuqic&limit=15&offset=0');
+                const response = await fetch('https://api.giphy.com/v2/emoji?api_key=VzJfRtnEENBiPs7cBI16fXcQmZIRuqic&limit=15&offset=10');
                 if(!response.ok){
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -38,16 +38,26 @@ export default function Card(){
          console.log(collection)
 
         return (
-            <>{collection.data.map(i=>{
+            collection !=null ? (
+            <>
+            <div className="card-table">
+            {collection.data.map(i=>{
                 return(
-                    <img src={i.images.fixed_width_small_still.url} />
+                <div key = {i.id} className="card">
+                    <img key={i.id} src={i.images.fixed_width_small_still.url} />
+                    </div>
                 )
             })}
              
             
-        
-        </>)
-
+        </div>
+        </>
+            ) : (
+                <>
+                
+                </>
+            )
+        )
 
         }
  
