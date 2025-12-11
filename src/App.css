@@ -35,15 +35,52 @@
 
 .card-table{
   display: grid;
-  grid-template-columns: repeat(3, 30%);
+  grid-template-columns: repeat(3, 33%);
 
 }
+
 .card {
-  padding: .5;
+  padding: 2rem 1rem;
   border: 1px solid gray;
   border-radius: .5rem;
+  margin: .3rem;
+  box-shadow: 2px 2px 2px;
 }
 
-.read-the-docs {
-  color: #888;
+.emoji{
+  width: 10rem;
 }
+
+.touched-true{
+  background-color: lightgreen;
+}
+
+.touched-loss{
+  background-color: lightpink
+}
+
+/* @media(max-width: 680px){
+  .card-table{
+    grid-template-columns: repeat(2, 50%);
+  }
+} */
+
+@media(max-width: 680px){
+ 
+
+  .emoji{
+    width: 5rem;
+  }
+}
+
+@media(max-width: 435px){
+.card-table{
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+
+}
+
+}
+
+
+
