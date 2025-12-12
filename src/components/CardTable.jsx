@@ -5,6 +5,9 @@ export default function CardTable() {
   const [data, setData] = useState(null);
   const [score, setScore] = useState(0);
   const [cards, setCards] = useState([]);
+  const [highScores, setHighScores] = useState([0])
+  const [touchedCardsState, setTouchedCardsState] = useState(false)
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,12 +18,11 @@ export default function CardTable() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
-
-      console.log(result);
-
       setData(result);
     };
     fetchData();
+    console.table(data)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -28,8 +30,8 @@ export default function CardTable() {
       const cardArray = data.data.map((card) => {
         return { key: card.id, url: card.images.original_still.url };
       });
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setCards(cardArray);
+
     }
   }, [data]);
 
@@ -41,7 +43,6 @@ export default function CardTable() {
       let n = tempArray[i];
       tempArray[i] = tempArray[r];
       tempArray[r] = n;
-       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCards(tempArray);
       console.log(cards)
     }
@@ -49,23 +50,38 @@ export default function CardTable() {
   }, [score])
 
 
+  function scoreHandler(){
+    
+    setScore(s =>s+1);
+  }
+
+  function zeroScoreSetter(){
+   const newHighScoreArray  = [...highScores, score]
+   setHighScores(newHighScoreArray.sort(function(a,b){return b-a}))
+    console.log(`high score: ${highScores}`)
+    setScore(0);
+   
+  }
+
+  
+
   return cards ? (
     <>
       <div className="card-table">
         {cards.map((i) => {
-          console.log(i.url);
           return (
-            <Card
+            <Card key={i.key}
               imgKey={i.key}
               touched={false}
-              zeroScore={() => setScore(0)}
-              onScore={() => setScore((s) => s + 1)}
+              zeroScore={zeroScoreSetter}
+              onScore={scoreHandler}
               imgSrc={i.url}
+              
             />
           );
         })}
       </div>
-      <div>Score: {score}</div>
+      <div>Score: {score} Highest score: {highScores[0]}</div>
     </>
   ) : (
     <></>

@@ -1,9 +1,12 @@
 import { useState } from "react";
 
-export function Card({imgKey, imgSrc, onScore, zeroScore}){
+export function Card({imgKey, imgSrc, onScore, zeroScore, touchedState}){
 
   const [isTouched, setIsTouched] = useState(false)
   
+  if(touchedState){
+    setIsTouched(true)
+  }
 
   function handleTouched(){
    if(!isTouched){
@@ -12,7 +15,7 @@ export function Card({imgKey, imgSrc, onScore, zeroScore}){
 
 } else {
 
-setIsTouched("loss")
+setIsTouched(true)
     zeroScore()
 }
    
