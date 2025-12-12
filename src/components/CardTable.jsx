@@ -12,7 +12,7 @@ export default function CardTable() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        "https://api.giphy.com/v2/emoji?api_key=VzJfRtnEENBiPs7cBI16fXcQmZIRuqic&limit=24&offset=21"
+        "https://api.giphy.com/v2/emoji?api_key=VzJfRtnEENBiPs7cBI16fXcQmZIRuqic&limit=15&offset=21"
       );
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -82,7 +82,12 @@ export default function CardTable() {
     }
 
   return cards ? (
-    <>
+    <> 
+    <div className = "scorecard">
+      <div className="score"><h2>Score: {score}</h2></div>
+      <div className="high-score"><h2>Highest score: {highScores[0]}</h2></div>
+         
+      </div>
       <div className="card-table">
         {cards.map((i) => {
           return (
@@ -98,9 +103,7 @@ export default function CardTable() {
           );
         })}
       </div>
-      <div>
-        Score: {score} Highest score: {highScores[0]}
-      </div>
+     
     </>
   ) : (
     <></>

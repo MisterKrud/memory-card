@@ -1,14 +1,20 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import CardTable from './components/CardTable'
 import './App.css'
+
+
+document.title = "Memory-Emoji"
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
+    <div className = "upper-banner">
+    <h1 className = "title">Memory Game</h1>
+    <p>Select as many pictures as you can without clicking the same one twice</p>
+    </div>
+
       
         <CardTable />
       
