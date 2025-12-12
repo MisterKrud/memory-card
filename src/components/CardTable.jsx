@@ -26,43 +26,36 @@ export default function CardTable() {
       setData(result);
     };
     fetchData();
-   
   }, []);
 
 
-function createCardArray(){
-if(data!=null){
-return data.data.map(card=>{
+  useEffect(() =>{
+    if(data){
+const cardArray =  data.data.map(card=>{
       return (
-        {key: card.id, url: card.url}
+        {key: card.id, url: card.images.original_still.url}
       )
-  
 })
-
+ // eslint-disable-next-line react-hooks/set-state-in-effect
+ setCards(cardArray)
 }
-
-}
-
-const cardArray = createCardArray()
-console.log(cardArray)
-
-setCards(...cardArray)
+  }, [data])
 
 
-
-  return data != null ? (
+  return cards? (
     
     <>
       <div className="card-table">
 
        
-        {data.data.map((i) => {
+        {cards.map((i) => {
          
-            
+            console.log(i.url)
           return (
-            <Card imgKey={i.id} touched={false} zeroScore={()=>setScore(0)} onScore={()=>setScore(s=>s+1)} imgSrc={i.images.original_still.url}  />
-            
+            <Card imgKey={i.key} touched={false} zeroScore={()=>setScore(0)} onScore={()=>setScore(s=>s+1)} imgSrc={i.url}  />
+           
           );
+           
         })}
      
       </div>
