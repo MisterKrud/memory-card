@@ -18,7 +18,7 @@ body{
 }
 
 p{
-  margin: .5rem; auto;
+  margin: .5rem auto;
   font-style: italic;
 }
 
@@ -51,7 +51,7 @@ p{
   width: 10rem;
 }
 
-@media(max-width: 1085px){
+@media(max-width: 1195px){
   .card-table{
   display: grid;
   grid-template-columns: repeat(3, 33%);
