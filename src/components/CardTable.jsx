@@ -3,13 +3,8 @@ import { Card } from "./Card";
 
 export default function CardTable() {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [score, setScore] = useState(0)
-
-
-  const [cards, setCards] = useState([])
-  const [count, setCount] = useState(0)
+  const [score, setScore] = useState(0);
+  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,36 +23,47 @@ export default function CardTable() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      const cardArray = data.data.map((card) => {
+        return { key: card.id, url: card.images.original_still.url };
+      });
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCards(cardArray);
+    }
+  }, [data]);
+
 
   useEffect(() =>{
-    if(data){
-const cardArray =  data.data.map(card=>{
-      return (
-        {key: card.id, url: card.images.original_still.url}
-      )
-})
- // eslint-disable-next-line react-hooks/set-state-in-effect
- setCards(cardArray)
-}
-  }, [data])
+    let tempArray = [...cards]
+    for (let i = tempArray.length -1; i>0; i--){
+      let r = Math.floor(Math.random() * (i+1));
+      let n = tempArray[i];
+      tempArray[i] = tempArray[r];
+      tempArray[r] = n;
+       // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCards(tempArray);
+      console.log(cards)
+    }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [score])
 
 
-  return cards? (
-    
+  return cards ? (
     <>
       <div className="card-table">
-
-       
         {cards.map((i) => {
-         
-            console.log(i.url)
+          console.log(i.url);
           return (
-            <Card imgKey={i.key} touched={false} zeroScore={()=>setScore(0)} onScore={()=>setScore(s=>s+1)} imgSrc={i.url}  />
-           
+            <Card
+              imgKey={i.key}
+              touched={false}
+              zeroScore={() => setScore(0)}
+              onScore={() => setScore((s) => s + 1)}
+              imgSrc={i.url}
+            />
           );
-           
         })}
-     
       </div>
       <div>Score: {score}</div>
     </>
@@ -65,7 +71,3 @@ const cardArray =  data.data.map(card=>{
     <></>
   );
 }
-
-
-
-
