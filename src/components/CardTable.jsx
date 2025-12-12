@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Card } from "./Card";
 
+
 export default function CardTable() {
   const [data, setData] = useState(null);
   const [score, setScore] = useState(0);
   const [cards, setCards] = useState([]);
   const [highScores, setHighScores] = useState([0])
-  const [touchedCardsState, setTouchedCardsState] = useState(false)
+  const [globalTouchedIndex, setGlobalTouchedIndex] = useState(0)
 
 
   useEffect(() => {
@@ -49,6 +50,10 @@ export default function CardTable() {
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [score])
 
+useEffect(()=>{
+  setGlobalTouchedIndex(0)
+},[cards])
+ 
 
   function scoreHandler(){
     
@@ -56,11 +61,18 @@ export default function CardTable() {
   }
 
   function zeroScoreSetter(){
-   const newHighScoreArray  = [...highScores, score]
-   setHighScores(newHighScoreArray.sort(function(a,b){return b-a}))
-    console.log(`high score: ${highScores}`)
+   getHighScore()
     setScore(0);
+   setGlobalTouchedIndex(1)
+
    
+  }
+
+  function getHighScore(){
+const newHighScoreArray  = [...highScores, score]
+   setHighScores(newHighScoreArray.sort(function(a,b){return b-a}))
+    
+    console.log(`high score: ${highScores}`)
   }
 
   
@@ -76,7 +88,8 @@ export default function CardTable() {
               zeroScore={zeroScoreSetter}
               onScore={scoreHandler}
               imgSrc={i.url}
-              
+              checkGlobal={globalTouchedIndex}
+              // globalTouchedState = {globalTouchedState}
             />
           );
         })}
